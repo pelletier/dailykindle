@@ -109,6 +109,7 @@ def generate_html(feed, chapter):
         html += '<div id="id_%s.%s"><h2>%s</h2>' % (chapter, section, entry.title)
         html += entry.description
         html += '</div>'
+        html += '<p class="pagebreak">&nbsp;</p>'
 
     return html + foot
 
