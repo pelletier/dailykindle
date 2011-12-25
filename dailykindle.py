@@ -52,6 +52,39 @@ def generate_toc(feeds):
 
     return xml + footer
 
+def generate_toc_html(feeds):
+    html = """
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Table of Contents</title></head>
+<body>
+
+<div>
+ <h1><b>TABLE OF CONTENTS</b></h1>
+ <br />"""
+    html_footer = """
+</body>
+</html>"""
+
+    chapter = 1
+
+    for feed in feeds:
+        chapter += 1
+
+        html += '<h3><b>%s</b></h3>' % feed.feed.title
+        html += '<ul>'
+
+        section = 0
+
+        for entry in feed.entries:
+            section += 1
+
+            html += '<li><a href="%s.html#id%s.%s">%s</a></li>' % (chapter, chapter, section, entry.title)
+
+        html += '</ul>'
+
+    return html + html_footer
+
 def generate_html(feed, chapter):
     html = """
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -130,6 +163,7 @@ def build(feeds):
     feedso = grab_feeds(feeds)
     write("daily.opf", generate_opf(feedso))
     write("toc.ncx", generate_toc(feedso))
+    write("toc.html", generate_toc_html(feedso))
 
     chapter = 1
 
