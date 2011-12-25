@@ -27,6 +27,11 @@ def generate_toc(feeds):
   </navMap>
 </ncx>"""
 
+    xml += '<navPoint class="toc" id="toc" playOrder="1">'
+    xml += '<navLabel><text>Table of Contents</text></navLabel>'
+    xml += '<content src="toc.html"/></navPoint>'
+
+
     play_order = 1
     chapter = 1
 
@@ -146,7 +151,7 @@ def generate_opf(feeds):
     opf += """
 <guide>
     <reference type="toc" title="Table of Contents" href="toc.html"></reference>
-    <reference type="text" title="First feed" href="1.html"></reference>
+    <reference type="text" title="Table of Contents" href="toc.html"></reference>
 </guide>
 """
     opf += "</package>"
