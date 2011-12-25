@@ -21,7 +21,7 @@ def generate_toc(feeds):
 <meta name="dtb:maxPageNumber" content="0"/>
 </head>
 <docTitle><text>DailyKindle</text></docTitle>
-<docAuthor><text>Thomas Pelletier</text></docAuthor>
+<docAuthor><text>DailyKindle</text></docAuthor>
   <navMap>"""
     footer = """
   </navMap>
