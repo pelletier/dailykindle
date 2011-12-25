@@ -79,7 +79,7 @@ def generate_toc_html(feeds):
         for entry in feed.entries:
             section += 1
 
-            html += '<li><a href="%s.html#id%s.%s">%s</a></li>' % (chapter, chapter, section, entry.title)
+            html += '<li><a href="%s.html#id_%s.%s">%s</a></li>' % (chapter, chapter, section, entry.title)
 
         html += '</ul>'
 
@@ -124,14 +124,14 @@ def generate_opf(feeds):
     <manifest>
 """
 
-    opf += '<item id="item1" media-type="applicaiton/xhtml+xml" href="toc.html"/>'
+    opf += '<item id="item1" media-type="application/xhtml+xml" href="toc.html"/>'
 
     item = 1
     for feed in feeds:
         item += 1
         opf += '<item id="item%s" media-type="application/xhtml+xml" href="%s.html"/>"' % (item, item)
 
-    opf += '<item id="toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>'
+    opf += '<item id="toc" media-type="application/x-dtbncx+xml" href="toc.ncx"></item>'
 
     opf += '</manifest>'
 
