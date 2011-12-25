@@ -27,8 +27,8 @@ def generate_toc(feeds):
   </navMap>
 </ncx>"""
 
-    play_order = 0
-    chapter = 0
+    play_order = 1
+    chapter = 1
 
     for feed in feeds:
         chapter += 1
@@ -79,6 +79,45 @@ def generate_html(feed, chapter):
 
     return html + foot
 
+def generate_opf(feeds):
+    opf = """
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookId">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>DailyKindle</dc:title>
+        <dc:language>en-us</dc:language>
+        <dc:creator>DailyKindle</dc:creator>
+    </metadata>
+    <manifest>
+"""
+
+    opf += '<item id="item1" media-type="applicaiton/xhtml+xml" href="toc.html"/>'
+
+    item = 1
+    for feed in feeds:
+        item += 1
+        opf += '<item id="item%s" media-type="application/xhtml+xml" href="%s.html"/>"' % (item, item)
+
+    opf += '<item id="toc" media-type="application/x-dtbncx+xml" href="toc.ncx"/>'
+
+    opf += '</manifest>'
+
+    opf += '<spine toc="toc">'
+    item = 1
+    for feed in feeds:
+        item += 1
+        opf += '<itemref idref="item%s"/>' % item
+    opf += '</spine>'
+
+    opf += """
+<guide>
+    <reference type="toc" title="Table of Contents" href="toc.html"></reference>
+    <reference type="text" title="First feed" href="1.html"></reference>
+</guide>
+"""
+    opf += "</package>"
+    return opf
+
 def write(filepath, content, relative=True):
     if relative:
         filepath = path.join(OUTPUT_DIR, filepath)
@@ -89,11 +128,12 @@ def write(filepath, content, relative=True):
 
 def build(feeds):
     feedso = grab_feeds(feeds)
+    write("daily.opf", generate_opf(feedso))
     write("toc.ncx", generate_toc(feedso))
 
-    chapter = 0
+    chapter = 1
 
-    for feed in feeds:
+    for feed in feedso:
         chapter += 1
         write("%s.html" % chapter, generate_html(feed, chapter))
 
