@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from shutil import copy
-from os import path, listdir
+from os import path, listdir, system
 import feedparser
 from jinja2 import Environment, PackageLoader
 
@@ -97,13 +97,16 @@ def render_and_write(template_name, context, output_name, output_dir):
     f.write(template.render(**context))
     f.close()
 
+def mobi(input_file, exec_path):
+    """Execute the KindleGen binary to create a MOBI file."""
+    system("%s %s" % (exec_path, input_file))
 
 if __name__ == "__main__":
     from sys import argv, exit
 
     def usage():
         print("""DailyKindle usage:
-python dailykindle.py <output dir> <day|week> <feed_url_1> [<feed_url_2> ...]""")
+python dailykindle.py <output dir> <day|week> <kindle_gen> <feed_url_1> [<feed_url_2> ...]""")
 
     if not len(argv) > 3:
         usage()
@@ -116,5 +119,8 @@ python dailykindle.py <output dir> <day|week> <feed_url_1> [<feed_url_2> ...]"""
         length = timedelta(7)
 
     print("Running DailyKindle...")
-    build(argv[3:], argv[1], length)
+    print("-> Generating files...")
+    build(argv[4:], argv[1], length)
+    print("-> Build the MOBI file using KindleGen...")
+    mobi(path.join(argv[1], 'daily.opf'), argv[3])
     print("Done")
