@@ -1,0 +1,1 @@
+-e hg+https://bitbucket.org/pelletier/dailykindle#egg=dailykindle
