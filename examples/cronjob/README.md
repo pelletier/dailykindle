@@ -18,6 +18,7 @@ This example shows you how to daily build and deliver your DailyKindle.
 * Run `pip install -r requirements.pip`
 * Modify `sources.txt` to your taste.
 * Add something like the following line to your crontab (`crontab -e`):
+
     0 5 * * * cd /home/thomas/dailykindle && /home/thomas/dailykindle/bin/python /home/thomas/dailykindle/script.py
 
 Enjoy your daily news dose!
