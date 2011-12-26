@@ -7,9 +7,6 @@ setup(
     url = "http://bitbucket.org/pelletier/dailykindle/",
     author = "Thomas Pelletier",
     author_email = "thomas@pelletier.im",
-    packages = [
-        "dailykindle",
-    ],
     classifiers = [
         'Programming Language :: Python',
         'License :: OSI Approved :: BSD License',
