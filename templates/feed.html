@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="KUG.css" type="text/css" />
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+
+    {% for entry in entries %}
+    <div id="id_{{number}}.{{entry.number}}">
+      <h2>{{entry.title}}</h2>
+      {{entry.description}}
+    </div>
+    <p class="pagebreak">&nbsp;</p>
+    {% endfor %}
+
+  </body>
+</html>

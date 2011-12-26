@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head><title>Table of Contents</title></head>
+  <body>
+    <h1><b>TABLE OF CONTENTS</b></h1>
+    <br />
+
+    {% for feed in feeds %}
+        <h3><b>{{feed.title}}</b></h3>
+        <ul>
+          {% for entry in feed.entries %}
+          <li><a href="{{feed.number}}.html#id_{{feed.number}}.{{entry.number}}">{{entry.title}}</a></li>
+          {% endfor %}
+        </ul>
+    {% endfor %}
+  </body>
+</html>
