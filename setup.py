@@ -12,4 +12,5 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
     ],
+    install_requires = ['jinja2','feedparser'],
 )
