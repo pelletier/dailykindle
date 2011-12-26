@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from shutil import copy
 from os import path, listdir
 import feedparser
@@ -8,11 +8,18 @@ templates_env = Environment(loader=PackageLoader('dailykindle', 'templates'))
 ROOT = path.dirname(path.abspath(__file__))
 
 
-def build(feeds_urls, output_dir):
+def build(feeds_urls, output_dir, max_old=None):
     """
     Given a list of feeds URLs and the path of a directory, writes the necessary
     for building a MOBI document.
+
+    max_old must be either None or a timedelta. It defines the maximum age of
+    posts which should be considered.
     """
+
+    # Convert max_old if needed.
+    if max_old == None:
+        max_old = timedelta.max
 
     # Give the feeds URLs to Feedparser to have nicely usable feed objects.
     feeds = [feedparser.parse(feed_url) for feed_url in feeds_urls]
@@ -38,6 +45,11 @@ def build(feeds_urls, output_dir):
 
         entry_number = 0
         for entry in feed.entries:
+
+            # We don't want old posts, just fresh news.
+            if date.today() - date(*entry.date_parsed[0:3]) > max_old:
+                continue
+
             play_order += 1
             entry_number += 1
 
@@ -85,17 +97,24 @@ def render_and_write(template_name, context, output_name, output_dir):
     f.write(template.render(**context))
     f.close()
 
+
 if __name__ == "__main__":
     from sys import argv, exit
 
     def usage():
         print("""DailyKindle usage:
-python dailykindle.py <output dir> <feed_url_1> [<feed_url_2> ...]""")
+python dailykindle.py <output dir> <day|week> <feed_url_1> [<feed_url_2> ...]""")
 
-    if not len(argv) > 2:
+    if not len(argv) > 3:
         usage()
         exit(64)
 
+    length = None
+    if argv[2] == 'day':
+        length = timedelta(1)
+    elif argv[2] == 'week':
+        length = timedelta(7)
+
     print("Running DailyKindle...")
-    build(argv[2:], argv[1])
+    build(argv[3:], argv[1], length)
     print("Done")
