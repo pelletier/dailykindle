@@ -4,6 +4,9 @@ DailyKindle is a Python scripts which, given a set of RSS/Atom feeds URLs,
 creates a MOBI file that you can directly use on you Amazon Kindle (or any other
 device that supports MOBI documents).
 
+Want to see what it looks like? Take a look at `examples/mobi_doc/`!
+
+
 ## Requirements
 
 * A working Python 3 environment (tested on OS X + Python 3.2 + Virtualenv).
@@ -37,6 +40,10 @@ file to your device.
     "~/Downloads/KindleGen_Mac_i386_v1.2/kindleGen" \
     "http://feeds.feedburner.com/b-list-entries" \
     "http://lucumr.pocoo.org/feed.atom"
+
+## Want more?
+
+Run the script as a cron job: see `/examples/cronjob/`.
 
 ## License
 
